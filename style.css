@@ -61,10 +61,18 @@ input{
   border-radius: 0.5rem;
   display: none;
 }  
+
 .noresults{
    background-color: #ffffff;
   color: #353535;
   padding: 1rem;
   border-radius: 0.5rem;
   /* display: none; */
+}
+.stillloading{
+   background-color: #ffffff;
+  color: #353535;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  display: block;
 }

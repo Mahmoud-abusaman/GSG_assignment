@@ -2,10 +2,10 @@ document.addEventListener('DOMContentLoaded', () => {
 	const searchinput = document.getElementById('searcinput');
 	const qoutecontainer = document.getElementById('qoutescontainer');
 	const errordiv = document.getElementById('error');
-
+	const stillloading=document.getElementById('stillloading');
 	
 	let quotes = [];
-	
+	let isloaded=false;
 	async function fetchdata() {
 		try {
 			const response = await fetch('https://dummyjson.com/quotes');
@@ -16,11 +16,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
 			const data = await response.json();
 			quotes = data.quotes;
+			isloaded=true;
+			stillloading.style.display='none';
 			renderqoutes(quotes);
 		} 
 		catch (error) {
 			console.error('Error fetching data:', error);
 			errordiv.style.display = 'block';
+			stillloading.style.display='none';
+
 			errordiv.textContent = `Failed to load data: ${error.message}`;
 		}
 	}
@@ -47,7 +51,6 @@ document.addEventListener('DOMContentLoaded', () => {
 	}
 
 
-
 	function filterqoutes(inp) {
 		if (!inp) {
 			renderqoutes(quotes);
@@ -63,7 +66,15 @@ document.addEventListener('DOMContentLoaded', () => {
 	}
 	
 	searchinput.addEventListener('input', (e) => {
-		filterqoutes(e.target.value);
+		if(isloaded==false){
+			e.target.value="";
+			stillloading.style.display='block'
+
+		}
+		else{
+			stillloading.style.display='none'
+			filterqoutes(e.target.value);
+		}
 	});
 	
 	fetchdata();
